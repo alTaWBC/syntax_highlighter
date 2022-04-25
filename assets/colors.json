@@ -1,0 +1,15 @@
+{
+    "keyword": "#FF9D00",
+    "string": "#A5FF90",
+    "comment": "#B362FF",
+    "function": "#FF9D00",
+    "entity": "#FAD000",
+    "constant": "#FF628C",
+    "meta": "#9EFFFF",
+    "invalid": "#EC3A37F5",
+    "comma": "#E1EFFF",
+    "punctuation": "#E1EFFF",
+    "variable": "#9EFFFF",
+    "operator": "#FF9D00",
+    "source.matlab": "#FFFFFF"
+}

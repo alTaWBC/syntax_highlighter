@@ -1,0 +1,3 @@
+identação
+mapa de carateres
+rgb + ascii

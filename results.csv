@@ -1,0 +1,90 @@
+block,code
+0,mean_temp=mean()
+0,abc=temp_data(1,1,:)
+0,abc=squezz(temp_data(1,1,:))
+0,sum(1:432)
+0,mean(1:432);
+0,abc=squeeze(temp_data(1,1,:));
+0,meantemp=mean(abc)
+0,abc1=abc-meantemp
+0,test1=zeros(432)
+0,test1=zeros(432,1)
+0,meandate=mean(test1)
+0,test2=test1-meandate
+0,(sum(abc1.*test2))
+0,new3=(sum(abc1.*test2))^2
+0,new4=sqrt(sum((abc1).^2)*sum((test2).^2))
+0,new3/new4
+0,b=regress(abc);
+0,b=regress(test1,abc);
+0,[p,S] = polyfit(test1,abc,1)
+0,mdl = LinearModel.fit(abc)
+0,mdl = LinearModel.fit(test1,abc);
+0,mdl = LinearModel.fit(test1,abc);
+1,for i=1:432
+1,a(i)=i
+1,end
+2,for i=1:432
+2,test1(i)=i;
+2,end
+3,for i=1:432
+3,a(i)=i
+3,end
+4,for i=1:432
+4,end
+5,for i=1:432
+5,test1(i)=i/10;
+5,end
+6,clear;
+6,files = dir("*.nc");
+6,dim_files = size(files);
+6,lat1=361;
+6,lon1=576;
+6,temp_data = zeros(lat1,lon1,dim_files(1));
+6,temp_data = temp_data*NaN;
+6,imagesc(temp_data(:,:,1));colorbar
+6,[row,column,month1]=size(temp_data);
+6,Month1=zeros(432,1);
+6,MonthsMean=mean(Month1);
+6,MonthsNew=Month1-MonthsMean;
+6,slopeOffset=zeros(row,column,2);
+6,CoefficentOfDetermination=zeros(row,column,1);
+6,CoefficentOfDeterminationInbuilt=zeros(row,column,1);
+6,slopeOffsetInbuilt=zeros(row,column,2);
+6,RmseErrorSlope=sqrt(mean(mean((slopeOffsetInbuilt(:,:,1)-slopeOffset(:,:,1)).^2)));
+6,RmseErrorRsquare=sqrt(mean(mean((CoefficentOfDeterminationInbuilt-CoefficentOfDetermination).^2)));
+6,figure;
+6,subplot(1,2,1)
+6,imagesc(slopeOffset(:,:,1));colorbar
+6,title("Slope Calculated from Algorithm");
+6,subplot(1,2,2)
+6,imagesc(CoefficentOfDetermination);colorbar
+6,title("coefficient of determination from Algorithm");
+6,subplot(1,2,1)
+6,figure
+6,subplot(1,2,1)
+6,imagesc(slopeOffsetInbuilt(:,:,1));colorbar
+6,title("Slope Calculated from Inbuilt");
+6,subplot(1,2,2)
+6,imagesc(CoefficentOfDeterminationInbuilt);colorbar
+6,title("coefficient of determination from Inbuilt");
+6,subplot(1,2,1)
+6,figure
+6,imagesc(slopeOffsetInbuilt(:,:,1)-slopeOffset(:,:,1));colorbar;
+6,title("slope inbuilt -slope algorithm");
+6,figure
+6,imagesc(CoefficentOfDeterminationInbuilt-CoefficentOfDetermination);colorbar;
+6,title("r^2 inbuilt - r^2 algorithm")
+6,RmseErrorSlope=sqrt(mean(mean((slopeOffsetInbuilt(:,:,1)-slopeOffset(:,:,1)).^2)))
+6,RmseErrorRsquare=sqrt(mean(mean((CoefficentOfDeterminationInbuilt-CoefficentOfDetermination).^2)))
+6,x = input("Do you Want to extract a particular Pixel Yes then enter 1 x = ");
+7,for i = 1:dim_files(1)
+7,    data = ncread(files(i).name,"M2TMNXSLV_5_12_4_T2M");
+7,    data = single(data);
+7,    temp_data(:,:,i) = rot90(data);
+7,end
+8,for i=1:month1
+8,    Month1(i)=i;
+8,end
+9,for i=1:row
+9,end
