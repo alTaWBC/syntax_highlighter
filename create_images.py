@@ -35,6 +35,6 @@ for filename in tfilenames:
     dataframe = dataframe.sort_values(by=["line", "start"])
     dataframe.to_csv(sorted_toke_location, index=False)
     image = ti.syntaxHighlightText(dataframe)
-    reduced_image = ti.reducedSyntaxHighlightText(dataframe)
+    reduced_image = ti.syntax_highlight_reduced(dataframe)
     image.save(output_location[:-3] + 'png',)
     cv.imwrite(reduced_output_location[:-3] + 'png', reduced_image)

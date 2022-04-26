@@ -20,8 +20,9 @@ DATABASE = r"C:\Users\WilliamCosta\Documents\bolsas\server\mainDB.db"
 # If node is installed in the system variables no path will be needed
 # Otherwise you need to change this variable to the node path
 NODE = 'node'
-WIDTH = 700
-HEIGHT = 300
+WIDTH = 20
+HEIGHT = 10
+CHANNELS = 3
 RGB = (45, 4, 85)
 DEFAULT = (0, 255, 0)
 PADDING = ['source.matlab', 'source.matlab', 'source.matlab']

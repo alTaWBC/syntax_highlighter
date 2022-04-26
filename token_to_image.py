@@ -43,7 +43,7 @@ def _getColorCode(scope):
 
 def getHighlight(scopes):
     # Pad the array to have at least 3 values
-    pad_scopes = [*c.PADDING, *scopes]
+    pad_scopes = [*c.PADDING, *json.loads(scopes)]
 
     # Get last 3 scopes
     r_token, g_token, b_token = pad_scopes[-3:]
@@ -89,7 +89,7 @@ def reducedSyntaxHighlightText(dataframe):
         if i == 0 and start > 0:
             i = start // 4
             print(i, start)
-        token_color = getHighlight(json.loads(scopes))
+        token_color = getHighlight(scopes)
         image[line, i, :] = token_color
         i += 1
     return image
@@ -101,7 +101,7 @@ def syntaxHighlightText(dataframe):
         line, start, __, token, scopes = row
         if line >= 10:
             break
-        token_color = scopesToColor(json.loads(scopes))
+        token_color = scopesToColor(scopes)
         draw.text((5+10*int(start), 5+20*int(line)),
                   str(token), font=font, fill=token_color)
     return image
@@ -109,16 +109,23 @@ def syntaxHighlightText(dataframe):
 
 def syntax_highlight_reduced(dataframe):
     image = getBaseImage()
+    ident = get_ident(dataframe)
     i = current_line = 0
 
-    for row in dataframe['line' < 10].itterows():
-        line, start, _, _, scopes = row
-
+    only_10_lines = dataframe[dataframe['line'] < 10]
+    for line, start, scopes in only_10_lines[['line', 'start', 'scopes']].to_numpy():
         if line != current_line:
-            i = start // 4
+            i = start // ident
             current_line = line
 
-        token_color = getHighlight(json.loads(scopes))
+        token_color = getHighlight(scopes)
         image[line, i, :] = token_color
         i += 1
     return image
+
+
+def get_ident(dataframe):
+    start = dataframe[dataframe['start'] == 0]
+    ident = start[start['token'].apply(str.isspace)]
+    print(ident['end'], np.gcd.reduce(ident['end']))
+    return np.gcd.reduce(ident['end'])
