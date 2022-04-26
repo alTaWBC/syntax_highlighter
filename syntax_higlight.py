@@ -19,7 +19,7 @@ variable_dictionary: Dict[str, int] = {}
 # %%% Utils
 
 
-def _get_empty_array() -> np.ndrray:
+def _get_empty_array() -> np.ndarray:
     return np.copy(default_array)
 
 
@@ -49,7 +49,13 @@ def _get_color_code(dataframe):
 
 
 def _get_positions(dataframe):
-    return dataframe.groupby('line').cumcount()
+    return dataframe.groupby('line')['pixel_size'].cumsum() - dataframe['pixel_size']
+
+def _remove_empty_lines(dataframe):
+    return dataframe[dataframe["token"].str.len() > 0]
+
+def _remove_spaces(dataframe):
+    return dataframe[(dataframe["start"] == 0) | (~dataframe["token"].str.isspace())]
 
 
 def _get_pixel_size(dataframe, ident):
@@ -58,14 +64,16 @@ def _get_pixel_size(dataframe, ident):
 # %%% public functions
 
 
-def syntax_highlight(dataframe: np.ndarray) -> np.ndarray:
-    """ Devolve syntax highlight
+def syntax_highlight(dataframe):
+    """ Returns syntax highlight
     """
+    dataframe = _remove_empty_lines(dataframe)
+    dataframe = _remove_spaces(dataframe)
     array = _get_empty_array()
     ident = _calculate_ident(dataframe)
     dataframe['color_code'] = _get_color_code(dataframe)
-    dataframe['position'] = _get_positions(dataframe)
     dataframe['pixel_size'] = _get_pixel_size(dataframe, ident)
-
-    for i, j in product(range(c.HEIGHT), range(c.WIDTH)):
-        array[i,j] = 
+    dataframe['position'] = _get_positions(dataframe)
+    return dataframe
+    # for i, j in product(range(c.HEIGHT), range(c.WIDTH)):
+    #     array[i,j] = 
