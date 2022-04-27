@@ -1,5 +1,5 @@
 
-function A(x, y)              % Main function
+function A(x, y)             % Main function
 B(x,y)
 D(y)
 

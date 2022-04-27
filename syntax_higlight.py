@@ -3,7 +3,6 @@ import json
 from typing import Dict, List, Tuple
 import numpy as np
 import constants as c
-from itertools import product
 
 # %%% Constants
 default_array = np.ones(shape=(c.HEIGHT, c.WIDTH, c.CHANNELS), dtype=np.uint8)
@@ -47,6 +46,10 @@ def _calculate_ident(dataframe: np.ndarray) -> int:
 def _get_color_code(dataframe):
     return dataframe['scopes'].apply(_get_highlight)
 
+def _identation(dataframe):
+    dataframe[np.logical_and(dataframe['start'] == 0, dataframe['token'].str.isspace())]['color_code'] = (0, 0, 0)
+    return dataframe
+
 
 def _get_positions(dataframe):
     return dataframe.groupby('line')['pixel_size'].cumsum() - dataframe['pixel_size']
@@ -74,6 +77,7 @@ def syntax_highlight(dataframe):
     dataframe['color_code'] = _get_color_code(dataframe)
     dataframe['pixel_size'] = _get_pixel_size(dataframe, ident)
     dataframe['position'] = _get_positions(dataframe)
+    dataframe['color_code'] = _identation(dataframe)
     return dataframe
     # for i, j in product(range(c.HEIGHT), range(c.WIDTH)):
     #     array[i,j] = 
