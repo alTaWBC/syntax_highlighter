@@ -21,7 +21,7 @@ DATABASE = r"C:\Users\WilliamCosta\Documents\bolsas\server\mainDB.db"
 # Otherwise you need to change this variable to the node path
 NODE = 'node'
 WIDTH = 20
-HEIGHT = 10
+HEIGHT = 20
 CHANNELS = 3
 RGB = (45, 4, 85)
 DEFAULT = (0, 255, 0)
